@@ -11,7 +11,7 @@ class ICalendarLexer(RegexLexer):
     """
 
     name = "iCalendar"
-    aliases = ["calendar", "icalendar", "ics"]
+    aliases = ["icalendar", "ics"]
     filenames = ["*.ics"]
 
     tokens = {

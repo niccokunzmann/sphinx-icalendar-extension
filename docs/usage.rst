@@ -31,8 +31,8 @@ Syntax
         END:VCALENDAR
 
 
-Examples
---------
+Calendar rendring
+-----------------
 
 Below, we use an ICS source a calendar with a name and description:
 
@@ -80,6 +80,7 @@ Below, we use an ICS source a calendar with a name and description:
     END:VEVENT
     END:VCALENDAR
 
+
 The example below is specified as jCal JSON:
 
 .. code-block:: calendar
@@ -108,3 +109,34 @@ The example below is specified as jCal JSON:
         ]
       ]
     ]
+
+ICS syntax highlighting
+-----------------------
+
+The extension also registers an ``ics`` (and ``icalendar``) language alias for
+Pygments so you can highlight raw ICS snippets in ordinary code blocks without
+triggering the calendar rendering:
+
+.. code-block:: rst
+
+    .. code-block:: ics
+
+        BEGIN:VCALENDAR
+        BEGIN:VEVENT
+        DTSTART;TZID="America/New_York":20260401T090000
+        DTEND;TZID="America/New_York":20260401T100000
+        SUMMARY:Quarterly review
+        END:VEVENT
+        END:VCALENDAR
+
+The result is a static, highlighted code block — no table, no tabs:
+
+.. code-block:: ics
+
+    BEGIN:VCALENDAR
+    BEGIN:VEVENT
+    DTSTART;TZID="America/New_York":20260401T090000
+    DTEND;TZID="America/New_York":20260401T100000
+    SUMMARY:Quarterly review
+    END:VEVENT
+    END:VCALENDAR

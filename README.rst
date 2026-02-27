@@ -16,7 +16,7 @@ tabs with a rendered event table and the source specification.
 :Dependencies: `icalendar <https://pypi.org/project/icalendar/>`_,
                `recurring-ical-events <https://pypi.org/project/recurring-ical-events/>`_,
                `sphinx-design <https://pypi.org/project/sphinx-design/>`_
-:License: `MIT License <https://github.com/niccokunzmann/sphinx-icalendar-extension/blob/main/LICENSE>`_
+:License: `GPL-3.0-or-later <https://github.com/niccokunzmann/sphinx-icalendar-extension/blob/main/LICENSE>`_
 
 ----
 

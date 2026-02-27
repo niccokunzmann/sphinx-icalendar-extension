@@ -11,3 +11,4 @@ documentation.
 
    install
    usage
+   changelog
