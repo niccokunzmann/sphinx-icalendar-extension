@@ -13,6 +13,7 @@ from sphinx_icalendar.version import __version__
 def setup(app):
     app.setup_extension("sphinx_design")
     app.add_lexer("calendar", ICalendarLexer)
+    app.add_lexer("ics", ICalendarLexer)
     app.add_node(
         calendar_block,
         html=(visit_calendar_html, depart_calendar_html),

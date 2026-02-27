@@ -82,8 +82,10 @@ def visit_calendar_html(self: HTML5Translator, node: calendar_block) -> None:
     table_html = _render_table(occurrences)
     source_html = html_mod.escape(source)
 
-    ics = source_html if is_ical else cal.to_ical().decode()
-    jcal = pretty_jcal(cal.to_jcal()) if is_ical else source_html
+    ics = source_html if is_ical else html_mod.escape(cal.to_ical().decode())
+    jcal = pretty_jcal(cal.to_jcal()) if is_ical else source
+    jcal_highlighted = self.highlighter.highlight_block(jcal, "json")
+    ics_highlighted = self.highlighter.highlight_block(ics, "ics")
 
     self.body.append(
         f'<div class="sd-tab-set">'
@@ -94,11 +96,11 @@ def visit_calendar_html(self: HTML5Translator, node: calendar_block) -> None:
         # rendered ics
         f'<input id="cal-{tid}-input--2" name="cal-{tid}" type="radio">'
         f'<label for="cal-{tid}-input--2">ICS</label>'
-        f'<div class="sd-tab-content docutils"><pre>{ics}</pre></div>'
+        f'<div class="sd-tab-content docutils"><pre>{ics_highlighted}</pre></div>'
         # rendered jcal
         f'<input id="cal-{tid}-input--3" name="cal-{tid}" type="radio">'
         f'<label for="cal-{tid}-input--3">jCal</label>'
-        f'<div class="sd-tab-content docutils"><pre>{jcal}</pre></div>'
+        f'<div class="sd-tab-content docutils">{jcal_highlighted}</div>'
         f"</div>"
     )
     raise nodes.SkipNode

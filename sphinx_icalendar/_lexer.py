@@ -1,5 +1,5 @@
 from pygments.lexer import RegexLexer
-from pygments.token import Keyword, Name, Number, Operator, String, Text
+from pygments.token import Keyword, Literal, Name, Number, Operator, String, Text
 
 
 class ICalendarLexer(RegexLexer):
@@ -25,10 +25,11 @@ class ICalendarLexer(RegexLexer):
             (r":", Operator),
             # quoted strings
             (r'"[^"]*"', String),
+            # dates and datetimes — longest patterns first, Z optional
+            (r"\d{8}T\d{6}Z?", Literal.Date),  # iCal datetime
+            (r"\d{8}", Literal.Date),  # iCal date
             # numbers (e.g. SEQUENCE:0)
-            (r"\b\d+\b", Number),
-            # jCal JSON structure tokens
-            (r"[\[\]{},]", Operator),
+            (r"\b\d+(\.\d*)?\b", Number),
             # comments / unknown
             (r".+", Text),
             (r"\n", Text),
