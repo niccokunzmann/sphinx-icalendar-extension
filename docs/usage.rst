@@ -71,16 +71,3 @@ source that follows it.  The extension is documenting itself.
     END:VEVENT
 
     END:VCALENDAR
-
-Error handling
---------------
-
-If the iCalendar source cannot be parsed, the extension renders an inline
-error message instead of crashing the build:
-
-.. code-block:: html
-
-    <div class="calendar-error">Failed to parse calendar: …</div>
-
-This keeps ``sphinx-build`` green even when calendar data is malformed or
-incomplete.

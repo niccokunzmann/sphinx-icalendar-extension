@@ -1,16 +1,13 @@
 import os
 import sys
-from importlib.metadata import version, PackageNotFoundError
+import sphinx_icalendar
 
 # Make the extension importable without installing it first
 sys.path.insert(0, os.path.abspath(".."))
 
 project = "sphinx-icalendar"
 author = "sphinx-icalendar contributors"
-try:
-    release = version("sphinx-icalendar")
-except PackageNotFoundError:
-    release = "unknown"
+release = sphinx_icalendar.__version__
 
 extensions = [
     "sphinx_icalendar",

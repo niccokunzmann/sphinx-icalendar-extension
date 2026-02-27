@@ -27,7 +27,8 @@ classifiers = [
 ]
 dependencies = [
     "sphinx>=5.0",
-    "icalendar>=5.0",
+    "icalendar>=7.0",
+    "recurring-ical-events>=3.8.1",
 ]
 
 [project.optional-dependencies]
