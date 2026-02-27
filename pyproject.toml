@@ -6,6 +6,7 @@ build-backend = "hatchling.build"
 name = "sphinx-icalendar"
 dynamic = ["version"]
 description = "Sphinx extension that renders code-block:: calendar as an HTML calendar"
+readme = "README.rst"
 requires-python = ">=3.9"
 license = { file = "LICENSE" }
 classifiers = [

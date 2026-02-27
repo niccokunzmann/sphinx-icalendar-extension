@@ -77,11 +77,13 @@ jobs:
       - build-docs
       - test-distribution
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v6
       - name: Create GitHub release from tag
         uses: ncipollo/release-action@v1
         with:
           allowUpdates: true
-          body: "To view the changes, please see the [Changelog](https://icalendar.readthedocs.io/en/latest/changelog.html). This release can be installed from [PyPI](https://pypi.org/project/icalendar/#history)."
+          body: "To view the changes, please see the [Changelog](https://sphinx-icalendar.readthedocs.io/en/latest/changelog.html). This release can be installed from [PyPI](https://pypi.org/project/sphinx-icalendar/)."
           generateReleaseNotes: false
