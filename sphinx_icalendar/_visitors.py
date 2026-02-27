@@ -35,9 +35,17 @@ def _tab_id(source: str) -> str:
     return hashlib.sha256(source.encode()).hexdigest()[:8]
 
 
-def _render_table(occurrences: Sequence[Component]) -> str:
-    if not occurrences:
-        return "<p><em>No events found.</em></p>"
+def _render_table(occurrences: Sequence[Component], cal: Calendar) -> str:
+    caption = (
+        f"<caption>{html_mod.escape(cal.calendar_name)}</caption>"
+        if cal.calendar_name
+        else ""
+    )
+    desc = (
+        f'<p class="calendar-description">{html_mod.escape(cal.description)}</p>'
+        if cal.description
+        else ""
+    )
     body = "".join(
         f"<tr>"
         f"<td>{html_mod.escape(str(occurrence.summary))}</td>"
@@ -46,10 +54,14 @@ def _render_table(occurrences: Sequence[Component]) -> str:
         f"</tr>"
         for occurrence in occurrences
     )
+    if not body.strip():
+        body = "<p><em>No events found.</em></p>"
     return (
         '<table class="calendar-table">'
+        f"{caption}"
         "<thead><tr><th>Summary</th><th>Start</th><th>End</th></tr></thead>"
         f"<tbody>{body}</tbody></table>"
+        f"{desc}"
     )
 
 
@@ -79,13 +91,11 @@ def visit_calendar_html(self: HTML5Translator, node: calendar_block) -> None:
     occurrences = recurring_ical_events.of(cal).all()
 
     tid = _tab_id(source)
-    table_html = _render_table(occurrences)
-    source_html = html_mod.escape(source)
-
-    ics = source_html if is_ical else html_mod.escape(cal.to_ical().decode())
+    table_html = _render_table(occurrences, cal)
+    ics = source if is_ical else cal.to_ical().decode()
     jcal = pretty_jcal(cal.to_jcal()) if is_ical else source
-    jcal_highlighted = self.highlighter.highlight_block(jcal, "json")
     ics_highlighted = self.highlighter.highlight_block(ics, "ics")
+    jcal_highlighted = self.highlighter.highlight_block(jcal, "json")
 
     self.body.append(
         f'<div class="sd-tab-set">'
@@ -96,7 +106,7 @@ def visit_calendar_html(self: HTML5Translator, node: calendar_block) -> None:
         # rendered ics
         f'<input id="cal-{tid}-input--2" name="cal-{tid}" type="radio">'
         f'<label for="cal-{tid}-input--2">ICS</label>'
-        f'<div class="sd-tab-content docutils"><pre>{ics_highlighted}</pre></div>'
+        f'<div class="sd-tab-content docutils">{ics_highlighted}</div>'
         # rendered jcal
         f'<input id="cal-{tid}-input--3" name="cal-{tid}" type="radio">'
         f'<label for="cal-{tid}-input--3">jCal</label>'

@@ -34,8 +34,7 @@ Syntax
 Examples
 --------
 
-iCalendar
-~~~~~~~~~
+Below, we use an ICS source a calendar with a name and description:
 
 .. code-block:: calendar
 
@@ -46,6 +45,7 @@ iCalendar
     METHOD:PUBLISH
     X-WR-CALNAME:Holidays
     X-WR-TIMEZONE:Etc/GMT
+    X-WR-CALDESC:Three holidays in the year
     BEGIN:VEVENT
     SUMMARY:New Year's Day
     DTSTART:20220101
@@ -80,11 +80,7 @@ iCalendar
     END:VEVENT
     END:VCALENDAR
 
-jCal (JSON)
-~~~~~~~~~~~
-
-The same directive accepts `jCal <https://www.rfc-editor.org/rfc/rfc7265>`_
-input — the format is detected automatically from the leading ``[``.
+The example below is specified as jCal JSON:
 
 .. code-block:: calendar
 
@@ -100,17 +96,15 @@ input — the format is detected automatically from the leading ``[``.
             ["dtstart",  {}, "date-time", "2026-03-02T10:00:00Z"],
             ["dtend",    {}, "date-time", "2026-03-02T11:00:00Z"],
             ["location", {}, "text",      "Room 42"]
-          ],
-          []
-        ],
-        ["vevent",
+          ], []
+        ], [
+          "vevent",
           [
             ["summary",  {}, "text",      "Sprint review"],
             ["dtstart",  {}, "date-time", "2026-03-13T14:00:00Z"],
             ["dtend",    {}, "date-time", "2026-03-13T15:00:00Z"],
             ["location", {}, "text",      "Room 42"]
-          ],
-          []
+          ], []
         ]
       ]
     ]
