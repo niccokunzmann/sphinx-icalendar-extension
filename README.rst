@@ -39,3 +39,7 @@ tabs with a rendered event table and the source specification.
 .. image:: https://img.shields.io/github/stars/niccokunzmann/sphinx-icalendar-extension?style=social
     :target: https://github.com/niccokunzmann/sphinx-icalendar-extension
     :alt: GitHub stars
+
+.. image:: https://img.shields.io/github/sponsors/niccokunzmann?label=Sponsor&logo=GitHub
+    :target: https://github.com/sponsors/niccokunzmann
+    :alt: GitHub Sponsors

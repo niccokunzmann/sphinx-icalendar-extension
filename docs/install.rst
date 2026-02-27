@@ -11,6 +11,8 @@ Requirements
 From PyPI
 ---------
 
+The package is available on `PyPI <https://pypi.org/project/sphinx-icalendar/>`_:
+
 .. code-block:: bash
 
     pip install sphinx-icalendar

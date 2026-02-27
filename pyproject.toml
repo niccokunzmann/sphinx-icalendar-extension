@@ -33,6 +33,14 @@ dependencies = [
     "sphinx-design>=0.5",
 ]
 
+[project.urls]
+Homepage = "https://sphinx-icalendar.readthedocs.io/en/latest/"
+Documentation = "https://sphinx-icalendar.readthedocs.io/en/latest/"
+Repository = "https://github.com/niccokunzmann/sphinx-icalendar-extension"
+Changelog = "https://sphinx-icalendar.readthedocs.io/en/latest/changelog.html"
+"Bug Tracker" = "https://github.com/niccokunzmann/sphinx-icalendar-extension/issues"
+Funding = "https://github.com/sponsors/niccokunzmann"
+
 [project.optional-dependencies]
 dev = ["pytest", "sphinx", "sphinx-autobuild"]
 
