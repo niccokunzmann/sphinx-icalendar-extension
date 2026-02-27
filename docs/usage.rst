@@ -2,10 +2,10 @@ Usage
 =====
 
 Write a ``.. code-block:: calendar`` directive anywhere in your
-reStructuredText source.  The body must be valid
+reStructuredText source. The body must be valid
 `iCalendar <https://www.rfc-editor.org/rfc/rfc5545>`_ (RFC 5545) text.
 The extension parses every ``VEVENT`` component and renders the results as
-an HTML table with **Summary**, **Start**, **End**, and **Location** columns.
+an HTML table.
 
 Syntax
 ------
@@ -23,51 +23,52 @@ Syntax
         END:VEVENT
         END:VCALENDAR
 
-How it works
-------------
-
-The extension registers a :class:`~sphinx.transforms.SphinxTransform` that
-runs after the RST source is parsed.  It walks the doctree and replaces every
-``literal_block`` node whose ``language`` attribute equals ``"calendar"`` with
-a custom ``calendar_block`` node.  An HTML visitor then turns that node into
-a ``<table>`` — no post-processing step, no separate build stage.
-
-Non-HTML builders (LaTeX, man, plain text) fall back to rendering the raw
-iCalendar source as a literal block so the build never breaks.
 
 Example — sphinx-icalendar development milestones
 --------------------------------------------------
 
 The table below is produced directly by this extension from the iCalendar
-source that follows it.  The extension is documenting itself.
+source that follows it. 
 
 .. code-block:: calendar
 
     BEGIN:VCALENDAR
     VERSION:2.0
-    PRODID:-//sphinx-icalendar//EN
-
+    PRODID:collective/icalendar
+    CALSCALE:GREGORIAN
+    METHOD:PUBLISH
+    X-WR-CALNAME:Holidays
+    X-WR-TIMEZONE:Etc/GMT
     BEGIN:VEVENT
-    DTSTART:20260210T000000Z
-    DTEND:20260210T000000Z
-    SUMMARY:Project started
-    DESCRIPTION:Initial commit – CalendarTransform + HTML visitor.
+    SUMMARY:New Year's Day
+    DTSTART:20220101
+    DTEND:20220101
+    DESCRIPTION:Happy New Year!
+    UID:636a0cc1dbd5a1667894465@icalendar
+    DTSTAMP:20221108T080105Z
+    STATUS:CONFIRMED
+    TRANSP:TRANSPARENT
+    SEQUENCE:0
     END:VEVENT
-
     BEGIN:VEVENT
-    DTSTART:20260224T000000Z
-    DTEND:20260224T000000Z
-    SUMMARY:v0.1.0 released
-    DESCRIPTION:First installable package published to PyPI.
-    LOCATION:PyPI
+    SUMMARY:Orthodox Christmas
+    DTSTART:20220107
+    DTEND:20220107
+    LOCATION:Russia
+    DESCRIPTION:It is Christmas again!
+    UID:636a0cc1dbfd91667894465@icalendar
+    STATUS:CONFIRMED
+    TRANSP:TRANSPARENT
+    SEQUENCE:0
     END:VEVENT
-
     BEGIN:VEVENT
-    DTSTART:20260301T000000Z
-    DTEND:20260301T000000Z
-    SUMMARY:Docs published
-    DESCRIPTION:This very page goes live — the extension documents itself.
-    LOCATION:Read the Docs
+    SUMMARY:International Women's Day
+    DTSTART:20220308
+    DTEND:20220308
+    DESCRIPTION:May the feminine be honoured!
+    UID:636a0cc1dc0f11667894465@icalendar
+    STATUS:CONFIRMED
+    TRANSP:TRANSPARENT
+    SEQUENCE:0
     END:VEVENT
-
     END:VCALENDAR

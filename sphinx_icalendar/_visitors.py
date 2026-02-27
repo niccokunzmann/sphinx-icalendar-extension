@@ -1,10 +1,16 @@
 from __future__ import annotations
 
+import hashlib
+import html as html_mod
+from collections.abc import Sequence
 from datetime import date, datetime
 
 from docutils import nodes
 from icalendar import Calendar
+from icalendar.cal import Component
 from icalendar.timezone import tzid_from_dt
+from sphinx.util.docutils import SphinxTranslator
+from sphinx.writers.html5 import HTML5Translator
 
 from sphinx_icalendar._nodes import calendar_block
 
@@ -24,47 +30,60 @@ def _fmt_dt(value: date | datetime | None) -> str:
     return value.strftime("%Y-%m-%d")
 
 
-def visit_calendar_html(self, node: calendar_block) -> None:
+def _tab_id(source: str) -> str:
+    return hashlib.sha256(source.encode()).hexdigest()[:8]
+
+
+def _render_table(occurrences: Sequence[Component]) -> str:
+    if not occurrences:
+        return "<p><em>No events found.</em></p>"
+    body = "".join(
+        f"<tr>"
+        f"<td>{html_mod.escape(str(occurrence.summary))}</td>"
+        f"<td>{html_mod.escape(_fmt_dt(occurrence.start))}</td>"
+        f"<td>{html_mod.escape(_fmt_dt(occurrence.end))}</td>"
+        f"</tr>"
+        for occurrence in occurrences
+    )
+    return (
+        '<table class="calendar-table">'
+        "<thead><tr><th>Summary</th><th>Start</th><th>End</th></tr></thead>"
+        f"<tbody>{body}</tbody></table>"
+    )
+
+
+def visit_calendar_html(self: HTML5Translator, node: calendar_block) -> None:
     source = node["ical_source"]
-    cal = Calendar.from_ical(source)  # TODO use icalendar.parse
+    cal = Calendar.from_ical(source)
+    occurrences = recurring_ical_events.of(cal).all()
 
-    body = []
+    tid = _tab_id(source)
+    table_html = _render_table(occurrences)
+    source_html = html_mod.escape(source)
 
-    for occurrence in recurring_ical_events.of(cal).all():
-        summary = occurrence.summary
-        start = occurrence.start
-        end = occurrence.end
-        body.append(
-            f"<tr><td>{summary}</td><td>{_fmt_dt(start)}</td><td>{_fmt_dt(end)}</td></tr>"
-        )
-
-    self.body.append('<div class="calendar-block">')
-    if not body:
-        self.body.append("<p><em>No events found.</em></p>")
-    else:
-        self.body.append(
-            '<table class="calendar-table">'
-            "<thead><tr>"
-            "<th>Summary</th><th>Start</th><th>End</th>"
-            "</tr></thead>"
-            "<tbody>"
-        )
-        self.body.extend(body)
-        self.body.append("</tbody></table>")
-    self.body.append("</div>")
+    self.body.append(
+        f'<div class="sd-tab-set">'
+        f'<input checked="checked" id="cal-{tid}-input--1" name="cal-{tid}" type="radio">'
+        f'<label for="cal-{tid}-input--1">Calendar</label>'
+        f'<div class="sd-tab-content docutils">{table_html}</div>'
+        f'<input id="cal-{tid}-input--2" name="cal-{tid}" type="radio">'
+        f'<label for="cal-{tid}-input--2">Source</label>'
+        f'<div class="sd-tab-content docutils"><pre>{source_html}</pre></div>'
+        f"</div>"
+    )
     raise nodes.SkipNode
 
 
-def depart_calendar_html(self, node: calendar_block) -> None:
+def depart_calendar_html(self: HTML5Translator, _: calendar_block) -> None:
     pass  # SkipNode is raised in visit, so this is never called
 
 
-def visit_calendar_unsupported(self, node: calendar_block) -> None:
+def visit_calendar_unsupported(self: SphinxTranslator, node: calendar_block) -> None:
     self.visit_literal_block(
         nodes.literal_block(node["ical_source"], node["ical_source"])
     )
     raise nodes.SkipNode
 
 
-def depart_calendar_unsupported(self, node: calendar_block) -> None:
+def depart_calendar_unsupported(self: SphinxTranslator, _: calendar_block) -> None:
     pass
