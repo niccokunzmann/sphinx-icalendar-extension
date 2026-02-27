@@ -1,0 +1,21 @@
+# virtual environment
+.venv/
+
+# Sphinx build output
+docs/_build/
+
+# Python packaging
+*.egg-info/
+dist/
+build/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# editors
+.vscode/
+.idea/
+
+sphinx_icalendar/_version.py
