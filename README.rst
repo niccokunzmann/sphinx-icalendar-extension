@@ -10,7 +10,7 @@ tabs with a rendered event table and the source specification.
 
 ----
 
-:Homepage: https://niccokunzmann.github.io/sphinx-icalendar-extension/
+:Homepage: https://sphinx-icalendar.readthedocs.io/en/latest/
 :Issue Tracker: https://github.com/niccokunzmann/sphinx-icalendar-extension/issues
 :Code: https://github.com/niccokunzmann/sphinx-icalendar-extension
 :Dependencies: `icalendar <https://pypi.org/project/icalendar/>`_,
@@ -29,7 +29,7 @@ tabs with a rendered event table and the source specification.
     :alt: Supported Python versions
 
 .. image:: https://img.shields.io/github/actions/workflow/status/niccokunzmann/sphinx-icalendar-extension/tests.yml?branch=main&label=main&logo=github
-    :target: https://github.com/niccokunzmann/sphinx-icalendar-extension/actions
+    :target: https://github.com/niccokunzmann/sphinx-icalendar-extension/actions/workflows/tests.yml
     :alt: GitHub Actions build status
 
 .. image:: https://readthedocs.org/projects/sphinx-icalendar/badge/?version=latest

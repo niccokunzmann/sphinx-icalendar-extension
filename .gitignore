@@ -17,5 +17,6 @@ __pycache__/
 # editors
 .vscode/
 .idea/
+.ruff_cache
 
 sphinx_icalendar/_version.py
