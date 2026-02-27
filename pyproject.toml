@@ -7,7 +7,7 @@ name = "sphinx-icalendar"
 dynamic = ["version"]
 description = "Sphinx extension that renders code-block:: calendar as an HTML calendar"
 readme = "README.rst"
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 license = { file = "LICENSE" }
 classifiers = [
     "Development Status :: 3 - Alpha",
