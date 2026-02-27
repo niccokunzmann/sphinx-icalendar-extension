@@ -2,8 +2,15 @@ Usage
 =====
 
 Write a ``.. code-block:: calendar`` directive anywhere in your
-reStructuredText source. The body must be valid
-`iCalendar <https://www.rfc-editor.org/rfc/rfc5545>`_ (RFC 5545) text.
+reStructuredText source.  The body may be either:
+
+* `iCalendar <https://www.rfc-editor.org/rfc/rfc5545>`_ (RFC 5545) — the
+  classic ``BEGIN:VCALENDAR`` text format, or
+* `jCal <https://www.rfc-editor.org/rfc/rfc7265>`_ (RFC 7265) — the JSON
+  representation of iCalendar.
+
+The extension detects the format automatically: sources starting with ``[``
+are parsed as jCal; everything else is treated as iCalendar.
 The extension parses every ``VEVENT`` component and renders the results as
 an HTML table.
 
@@ -24,11 +31,11 @@ Syntax
         END:VCALENDAR
 
 
-Example — sphinx-icalendar development milestones
---------------------------------------------------
+Examples
+--------
 
-The table below is produced directly by this extension from the iCalendar
-source that follows it. 
+iCalendar
+~~~~~~~~~
 
 .. code-block:: calendar
 
@@ -72,3 +79,38 @@ source that follows it.
     SEQUENCE:0
     END:VEVENT
     END:VCALENDAR
+
+jCal (JSON)
+~~~~~~~~~~~
+
+The same directive accepts `jCal <https://www.rfc-editor.org/rfc/rfc7265>`_
+input — the format is detected automatically from the leading ``[``.
+
+.. code-block:: calendar
+
+    ["vcalendar",
+      [
+        ["version", {}, "text", "2.0"],
+        ["prodid",  {}, "text", "-//sphinx-icalendar//EN"]
+      ],
+      [
+        ["vevent",
+          [
+            ["summary",  {}, "text",      "Sprint planning"],
+            ["dtstart",  {}, "date-time", "2026-03-02T10:00:00Z"],
+            ["dtend",    {}, "date-time", "2026-03-02T11:00:00Z"],
+            ["location", {}, "text",      "Room 42"]
+          ],
+          []
+        ],
+        ["vevent",
+          [
+            ["summary",  {}, "text",      "Sprint review"],
+            ["dtstart",  {}, "date-time", "2026-03-13T14:00:00Z"],
+            ["dtend",    {}, "date-time", "2026-03-13T15:00:00Z"],
+            ["location", {}, "text",      "Room 42"]
+          ],
+          []
+        ]
+      ]
+    ]

@@ -1,9 +1,4 @@
-import os
-import sys
 import sphinx_icalendar
-
-# Make the extension importable without installing it first
-sys.path.insert(0, os.path.abspath(".."))
 
 project = "sphinx-icalendar"
 author = "sphinx-icalendar contributors"

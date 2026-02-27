@@ -4,6 +4,7 @@ import hashlib
 import html as html_mod
 from collections.abc import Sequence
 from datetime import date, datetime
+import json
 
 from docutils import nodes
 from icalendar import Calendar
@@ -52,23 +53,52 @@ def _render_table(occurrences: Sequence[Component]) -> str:
     )
 
 
+def pretty_jcal(jcal: list, indent: int = 0) -> str:
+    """Return a pretty jcal string."""
+    if not isinstance(jcal, list):
+        raise TypeError("jcal must be a list")
+    name, prop, sub = jcal
+    return " " * indent + ("\n" + " " * indent).join(
+        [
+            "[",
+            f"  {json.dumps(name)},",
+            "  [",
+            *[f"    {json.dumps(p)}," for p in prop],
+            "  ], [",
+            *[f"{pretty_jcal(s, indent=4)}," for s in sub],
+            "  ],",
+            "]",
+        ]
+    )
+
+
 def visit_calendar_html(self: HTML5Translator, node: calendar_block) -> None:
     source = node["ical_source"]
-    cal = Calendar.from_ical(source)
+    is_ical = source.strip()[:1].upper() == "B"
+    cal = Calendar.from_ical(source) if is_ical else Calendar.from_jcal(source)
     occurrences = recurring_ical_events.of(cal).all()
 
     tid = _tab_id(source)
     table_html = _render_table(occurrences)
     source_html = html_mod.escape(source)
 
+    ics = source_html if is_ical else cal.to_ical().decode()
+    jcal = pretty_jcal(cal.to_jcal()) if is_ical else source_html
+
     self.body.append(
         f'<div class="sd-tab-set">'
+        # rendered content
         f'<input checked="checked" id="cal-{tid}-input--1" name="cal-{tid}" type="radio">'
         f'<label for="cal-{tid}-input--1">Calendar</label>'
         f'<div class="sd-tab-content docutils">{table_html}</div>'
+        # rendered ics
         f'<input id="cal-{tid}-input--2" name="cal-{tid}" type="radio">'
-        f'<label for="cal-{tid}-input--2">Source</label>'
-        f'<div class="sd-tab-content docutils"><pre>{source_html}</pre></div>'
+        f'<label for="cal-{tid}-input--2">ICS</label>'
+        f'<div class="sd-tab-content docutils"><pre>{ics}</pre></div>'
+        # rendered jcal
+        f'<input id="cal-{tid}-input--3" name="cal-{tid}" type="radio">'
+        f'<label for="cal-{tid}-input--3">jCal</label>'
+        f'<div class="sd-tab-content docutils"><pre>{jcal}</pre></div>'
         f"</div>"
     )
     raise nodes.SkipNode
