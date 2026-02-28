@@ -20,7 +20,7 @@ Initial release.
 - Accept both :rfc:`5545` iCalendar (ICS) and :rfc:`7265` jCal (JSON) input,
   with automatic format detection.
 - Display three tabs per block: a rendered event table, the ICS source, and
-  the jCal source, using :pypi:`sphinx-design`.
+  the jCal source, using `sphinx-design <https://pypi.org/project/sphinx-design/>`.
 - Show calendar name (``X-WR-CALNAME``) as a table caption and description
   (``X-WR-CALDESC``) below the table when present.
 - Syntax-highlight ICS blocks with a custom Pygments lexer (aliases:
