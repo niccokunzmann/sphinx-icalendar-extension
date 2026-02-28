@@ -9,12 +9,12 @@ Changelog
 - Document jCal syntax highlighting in the Usage guide alongside the existing ICS highlighting section.
 - Update Python versions
 
-0.0.3 (2022-02-27)
+0.0.3 (2026-02-27)
 ------------------
 
 - update documentation links
 
-0.0.2 (2022-02-27)
+0.0.2 (2026-02-27)
 -------------------
 
 - update github release process
