@@ -31,8 +31,7 @@ Clone the repository and install in editable mode:
 Enabling the extension
 ----------------------
 
-Add ``sphinx_icalendar`` to the ``extensions`` list in your project's
-``conf.py``:
+Add ``sphinx_icalendar`` to the ``extensions`` list in your project's ``conf.py``:
 
 .. code-block:: python
 
