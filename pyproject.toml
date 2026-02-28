@@ -7,7 +7,7 @@ name = "sphinx-icalendar"
 dynamic = ["version"]
 description = "Sphinx extension that renders code-block:: calendar as an HTML calendar"
 readme = "README.rst"
-requires-python = ">=3.10"
+requires-python = ">=3.10"  # also check install.rst
 license = { file = "LICENSE" }
 classifiers = [
     "Development Status :: 3 - Alpha",
@@ -26,7 +26,7 @@ classifiers = [
     "Topic :: Software Development :: Libraries :: Python Modules",
 ]
 dependencies = [
-    "sphinx>=5.0",
+    "sphinx>=5.0",  # also check install.rst
     "icalendar>=7.0",
     "recurring-ical-events>=3.8.1",
     "sphinx-design>=0.5",
@@ -45,6 +45,7 @@ dev = ["pytest", "sphinx", "sphinx-autobuild"]
 
 [project.entry-points."pygments.lexers"]
 ics = "sphinx_icalendar._lexer:ICalendarLexer"
+jcal = "sphinx_icalendar._lexer:JCalLexer"
 
 [tool.hatch.version]
 source = "vcs"

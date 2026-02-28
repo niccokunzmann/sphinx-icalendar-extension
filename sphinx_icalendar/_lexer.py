@@ -1,5 +1,19 @@
 from pygments.lexer import RegexLexer
+from pygments.lexers.data import JsonLexer
 from pygments.token import Keyword, Literal, Name, Number, Operator, String, Text
+
+
+class JCalLexer(JsonLexer):
+    """Pygments lexer alias for jCal (RFC 7265) source blocks.
+
+    jCal is JSON, so this is a thin subclass of JsonLexer that exposes the
+    ``jcal`` and ``jcalendar`` language aliases and registers as a Pygments
+    entry point so ``.. code-block:: jcal`` works globally.
+    """
+
+    name = "jCal"
+    aliases = ["jcal", "jcalendar"]
+    filenames: list[str] = []
 
 
 class ICalendarLexer(RegexLexer):

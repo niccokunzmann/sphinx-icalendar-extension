@@ -1,21 +1,17 @@
 Usage
 =====
 
-Write a ``.. code-block:: calendar`` directive anywhere in your
-reStructuredText source.  The body may be either:
 
-* `iCalendar <https://www.rfc-editor.org/rfc/rfc5545>`_ (RFC 5545) — the
-  classic ``BEGIN:VCALENDAR`` text format, or
-* `jCal <https://www.rfc-editor.org/rfc/rfc7265>`_ (RFC 7265) — the JSON
-  representation of iCalendar.
+Calendar rendering
+------------------
 
-The extension detects the format automatically: sources starting with ``[``
-are parsed as jCal; everything else is treated as iCalendar.
-The extension parses every ``VEVENT`` component and renders the results as
-an HTML table.
+Write a ``.. code-block:: calendar`` directive anywhere in your reStructuredText source.
+The body may be either:
 
-Syntax
-------
+* :rfc:`5545` iCalendar (ICS) — the ``BEGIN:VCALENDAR`` text format, or
+* :rfc:`7265` jCal — the JSON representation of iCalendar.
+
+The extension detects the format automatically.
 
 .. code-block:: rst
 
@@ -30,11 +26,9 @@ Syntax
         END:VEVENT
         END:VCALENDAR
 
+Below, we use a different ICS source to show a calendar with a name and description.
+The original ICS formatting is preserved.
 
-Calendar rendring
------------------
-
-Below, we use an ICS source a calendar with a name and description:
 
 .. code-block:: calendar
 
@@ -46,6 +40,7 @@ Below, we use an ICS source a calendar with a name and description:
     X-WR-CALNAME:Holidays
     X-WR-TIMEZONE:Etc/GMT
     X-WR-CALDESC:Three holidays in the year
+
     BEGIN:VEVENT
     SUMMARY:New Year's Day
     DTSTART:20220101
@@ -57,6 +52,7 @@ Below, we use an ICS source a calendar with a name and description:
     TRANSP:TRANSPARENT
     SEQUENCE:0
     END:VEVENT
+
     BEGIN:VEVENT
     SUMMARY:Orthodox Christmas
     DTSTART:20220107
@@ -68,6 +64,7 @@ Below, we use an ICS source a calendar with a name and description:
     TRANSP:TRANSPARENT
     SEQUENCE:0
     END:VEVENT
+
     BEGIN:VEVENT
     SUMMARY:International Women's Day
     DTSTART:20220308
@@ -78,10 +75,12 @@ Below, we use an ICS source a calendar with a name and description:
     TRANSP:TRANSPARENT
     SEQUENCE:0
     END:VEVENT
+
     END:VCALENDAR
 
 
-The example below is specified as jCal JSON:
+The example below is specified as jCal JSON.
+The original JSON formatting is preserved.
 
 .. code-block:: calendar
 
@@ -113,9 +112,7 @@ The example below is specified as jCal JSON:
 ICS syntax highlighting
 -----------------------
 
-The extension also registers an ``ics`` (and ``icalendar``) language alias for
-Pygments so you can highlight raw ICS snippets in ordinary code blocks without
-triggering the calendar rendering:
+The extension also registers an ``ics`` (and ``icalendar``) language alias for Pygments so you can highlight raw ICS snippets in ordinary code blocks without triggering the calendar rendering:
 
 .. code-block:: rst
 
@@ -129,7 +126,7 @@ triggering the calendar rendering:
         END:VEVENT
         END:VCALENDAR
 
-The result is a static, highlighted code block — no table, no tabs:
+The result is a static, highlighted code block:
 
 .. code-block:: ics
 
@@ -140,3 +137,40 @@ The result is a static, highlighted code block — no table, no tabs:
     SUMMARY:Quarterly review
     END:VEVENT
     END:VCALENDAR
+
+jCal syntax highlighting
+------------------------
+
+The extension also registers ``jcal`` (and ``jcalendar``) as language aliases that apply JSON highlighting to raw jCal snippets without triggering the calendar rendering:
+
+.. code-block:: rst
+
+    .. code-block:: jcal
+
+        ["vcalendar",
+          [["version", {}, "text", "2.0"]],
+          [["vevent",
+            [
+              ["summary",  {}, "text",      "Quarterly review"],
+              ["dtstart",  {}, "date-time", "2026-04-01T09:00:00Z"],
+              ["dtend",    {}, "date-time", "2026-04-01T10:00:00Z"]
+            ], []
+          ]]
+        ]
+
+The result is a static, JSON-highlighted code block:
+
+.. code-block:: jcal
+
+    ["vcalendar",
+      [["version", {}, "text", "2.0"]],
+      [["vevent",
+        [
+          ["summary",  {}, "text",      "Quarterly review"],
+          ["dtstart",  {}, "date-time", "2026-04-01T09:00:00Z"],
+          ["dtend",    {}, "date-time", "2026-04-01T10:00:00Z"]
+        ], []
+      ]]
+    ]
+
+The highlighting is provided by Pygments' built-in JSON lexer.
