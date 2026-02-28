@@ -6,7 +6,8 @@ Requirements
 
 - Python 3.10 or later
 - Sphinx 5.0 or later
-- `icalendar <https://icalendar.readthedocs.io/>`_ 5.0 or later
+- `icalendar <https://icalendar.readthedocs.io/>`_ 7.0 or later
+- `recurring-ical-events <https://recurring-ical-events.readthedocs.io/>`_
 
 From PyPI
 ---------
