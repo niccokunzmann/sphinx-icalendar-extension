@@ -7,6 +7,7 @@ Changelog
 - Add ``jcal`` and ``jcalendar`` language aliases backed by a ``JCalLexer`` subclass of Pygments' built-in ``JsonLexer``.
   Both aliases are registered as Pygments entry points so ``.. code-block:: jcal`` works globally.
 - Document jCal syntax highlighting in the Usage guide alongside the existing ICS highlighting section.
+- Update Python versions
 
 0.0.3 (2022-02-27)
 ------------------
